@@ -77,9 +77,9 @@ function App() {
             onCountrySelect={setSelectedCountry}
           />
         </div>
-        <div>
+        {/* <div>
           <SalaryBreakdown salaryData={salaryData} />
-        </div>
+        </div> */}
       </div>
       
       <footer>
