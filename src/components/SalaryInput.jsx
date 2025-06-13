@@ -11,7 +11,7 @@ const SalaryInput = ({ grossSalary, setGrossSalary }) => {
 
   return (
     <div className="salary-input">
-      <h3>Annual Gross Salary</h3>
+      <h3>Monthly Gross Salary</h3>
       <div className="salary-value-display">
         €{grossSalary.toLocaleString()}
       </div>
@@ -29,16 +29,16 @@ const SalaryInput = ({ grossSalary, setGrossSalary }) => {
       <div className="salary-slider">
         <input
           type="range"
-          min="10000"
-          max="200000"
-          step="1000"
+          min="1000"
+          max="15000"
+          step="100"
           value={grossSalary}
           onChange={handleSalaryChange}
           aria-label="Salary range slider"
         />
         <div className="range-labels">
-          <span>€10,000</span>
-          <span>€200,000</span>
+          <span>€1,000</span>
+          <span>€15,000</span>
         </div>
       </div>
     </div>

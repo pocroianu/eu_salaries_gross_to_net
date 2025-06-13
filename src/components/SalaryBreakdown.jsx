@@ -36,7 +36,7 @@ const SalaryBreakdown = ({ salaryData }) => {
       <h3>Salary Breakdown for {country}</h3>
       
       <div className="breakdown-item gross">
-        <div className="label">Gross Annual Salary</div>
+        <div className="label">Gross Monthly Salary</div>
         <div className="value">{formatCurrency(grossSalary)}</div>
         <div className="percentage">100%</div>
       </div>
@@ -73,7 +73,7 @@ const SalaryBreakdown = ({ salaryData }) => {
       </div>
       
       <div className="breakdown-item net">
-        <div className="label">Net Annual Salary</div>
+        <div className="label">Net Monthly Salary</div>
         <div className="value">{formatCurrency(netSalary)}</div>
         <div className="percentage">{netPercentage.toFixed(1)}%</div>
         <div className="bar-container">
@@ -82,14 +82,14 @@ const SalaryBreakdown = ({ salaryData }) => {
       </div>
       
       <div className="monthly-breakdown">
-        <h4>Monthly Breakdown</h4>
+        <h4>Annual Breakdown</h4>
         <div className="monthly-item">
-          <div className="label">Gross Monthly</div>
-          <div className="value">{formatCurrency(grossSalary / 12)}</div>
+          <div className="label">Gross Annual</div>
+          <div className="value">{formatCurrency(grossSalary * 12)}</div>
         </div>
         <div className="monthly-item">
-          <div className="label">Net Monthly</div>
-          <div className="value">{formatCurrency(netSalary / 12)}</div>
+          <div className="label">Net Annual</div>
+          <div className="value">{formatCurrency(netSalary * 12)}</div>
         </div>
       </div>
     </div>

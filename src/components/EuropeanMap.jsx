@@ -43,18 +43,26 @@ const EuropeanMap = ({ selectedCountry, comparisonData, onCountrySelect }) => {
     // Map GeoJSON names to our data names
     "Czechia": "Czech Republic",
     "United Kingdom": "UK",
-    "UK": "United Kingdom"
+    "UK": "United Kingdom",
+    "Czechia": "Czech Republic",
+    "Bosnia and Herz.": "Bosnia and Herzegovina",
+    "Macedonia": "North Macedonia",
+    "Czech Rep.": "Czech Republic",
+    "Bosnia and Herzegovina": "Bosnia and Herzegovina",
+    "N. Cyprus": "Cyprus"
   };
 
   // Find country data in comparison data
   const getCountryData = (geoCountryName) => {
     if (!comparisonData || comparisonData.length === 0) return null;
+    if (!geoCountryName) return null;
     
     // Get the mapped name or use the original name
     const mappedName = countryNameMapping[geoCountryName] || geoCountryName;
     
+    // Find country data, ensure country has a name property
     return comparisonData.find(country => 
-      country.name.toLowerCase() === mappedName.toLowerCase()
+      country && country.name && country.name.toLowerCase() === mappedName.toLowerCase()
     );
   };
 
