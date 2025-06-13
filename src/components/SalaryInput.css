@@ -132,45 +132,72 @@
   -webkit-text-fill-color: transparent;
 }
 
+.salary-input-container {
+  width: 100%;
+  margin-bottom: 2rem;
+  background-color: rgba(30, 41, 59, 0.5);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.salary-input-container h3 {
+  font-size: 1.25rem;
+  margin-bottom: 1.25rem;
+  color: #e2e8f0;
+  text-align: center;
+}
+
 .salary-options {
   display: flex;
-  justify-content: space-around;
-  gap: 0.75rem;
-  margin: 1rem 0;
+  gap: 1.5rem;
+  justify-content: center;
 }
 
 .salary-option {
   flex: 1;
-  padding: 0.75rem 1rem;
-  font-size: 1.1rem;
-  font-weight: 600;
-  background-color: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 8px;
+  max-width: 200px;
+  background-color: rgba(30, 41, 59, 0.7);
+  border: 2px solid rgba(59, 130, 246, 0.2);
+  border-radius: 10px;
+  padding: 1.25rem;
   color: #fff;
   cursor: pointer;
-  transition: all 0.3s ease;
-  text-align: center;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: all 0.25s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .salary-option:hover {
-  background-color: rgba(255, 255, 255, 0.15);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  background-color: rgba(59, 130, 246, 0.15);
+  border-color: rgba(59, 130, 246, 0.5);
+  transform: translateY(-3px);
 }
 
 .salary-option.selected {
-  background: linear-gradient(90deg, #646cff, #8b5cf6);
-  border-color: transparent;
-  color: white;
-  box-shadow: 0 4px 12px rgba(100, 108, 255, 0.4);
+  background-color: rgba(59, 130, 246, 0.25);
+  border-color: rgba(59, 130, 246, 1);
+  box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+}
+
+.salary-amount {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.salary-label {
+  font-size: 0.85rem;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .salary-description {
   margin-top: 0.5rem;
   text-align: center;
   font-size: 0.9rem;
-  color: #aaa;
+  color: #94a3b8;
   line-height: 1.4;
 }

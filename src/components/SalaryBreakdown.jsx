@@ -68,18 +68,6 @@ const SalaryBreakdown = ({ salaryData }) => {
           <div className="bar net-salary" style={{ width: `${takeHomePercentage || ((netSalary / grossSalary) * 100)}%` }}></div>
         </div>
       </div>
-      
-      <div className="monthly-breakdown">
-        <h4>Annual Equivalent</h4>
-        <div className="monthly-item">
-          <div className="label">Gross Annual</div>
-          <div className="value">{formatCurrency(grossSalary * 12)}</div>
-        </div>
-        <div className="monthly-item">
-          <div className="label">Net Annual</div>
-          <div className="value">{formatCurrency(netSalary * 12)}</div>
-        </div>
-      </div>
     </div>
   );
 };

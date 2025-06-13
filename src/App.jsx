@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import './App.css'
 import SalaryInput from './components/SalaryInput'
-import CountrySelector from './components/CountrySelector'
 import SalaryBreakdown from './components/SalaryBreakdown'
 import EuropeanMap from './components/EuropeanMap'
 import ComparisonChart from './components/ComparisonChart'
@@ -62,19 +61,16 @@ function App() {
   return (
     <div className="container">
       <header>
-        <h1>EU Salaries: Gross to Net Visualization</h1>
-        <p>Compare net salaries after taxes and social security deductions across European countries</p>
+        <h1>EU Salaries: Take-Home Visualization</h1>
+        <p className="subtitle">See how much of your salary you actually keep after taxes across Europe</p>
+        <div className="instructions">
+          <p><span className="instruction-step">1.</span> Select a monthly salary below</p>
+          <p><span className="instruction-step">2.</span> Click any country on the map to explore details</p>
+        </div>
       </header>
       
       <div className="controls">
-        <SalaryInput 
-          grossSalary={grossSalary} 
-          setGrossSalary={setGrossSalary} 
-        />
-        <CountrySelector 
-          selectedCountry={selectedCountry}
-          setSelectedCountry={setSelectedCountry}
-        />
+        <SalaryInput grossSalary={grossSalary} setGrossSalary={setGrossSalary} />
       </div>
       
       <div className="visualization-container">

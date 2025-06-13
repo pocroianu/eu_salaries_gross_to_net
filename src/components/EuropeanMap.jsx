@@ -8,7 +8,7 @@ import './EuropeanMap.css';
 const geoUrl = "/data/europe.topojson";
 
 const EuropeanMap = ({ selectedCountry, comparisonData, onCountrySelect }) => {
-  const [tooltipContent, setTooltipContent] = useState('');
+  const [tooltipData, setTooltipData] = useState(null);
   const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
   const [showTooltip, setShowTooltip] = useState(false);
   const [geoData, setGeoData] = useState(null);
@@ -64,23 +64,55 @@ const EuropeanMap = ({ selectedCountry, comparisonData, onCountrySelect }) => {
     );
   };
 
+  // Map tooltip content
+  const tooltipContent = (geo) => {
+    const countryData = getCountryData(geo.properties.name);
+    if (!countryData) {
+      return (
+        <div className="tooltip">
+          <div className="tooltip-country">{geo.properties.name}</div>
+          <div className="tooltip-info">No data available</div>
+        </div>
+      );
+    }
+
+    const takeHomePercentage = countryData.takeHomePercentage || 
+      ((countryData.netSalary / countryData.grossSalary) * 100);
+
+    // Calculate how much above/below average this country is
+    const avgTakeHome = comparisonData.reduce((sum, c) => {
+      const pct = c.takeHomePercentage || ((c.netSalary / c.grossSalary) * 100);
+      return sum + pct;
+    }, 0) / comparisonData.length;
+
+    const diffFromAvg = takeHomePercentage - avgTakeHome;
+    const isAboveAverage = diffFromAvg >= 0;
+
+    return (
+      <div className="tooltip">
+        <div className="tooltip-country">{countryData.name}</div>
+        <div className="tooltip-percentage">
+          <span className="percentage-value">{takeHomePercentage.toFixed(1)}%</span>
+          <span className="percentage-label">Take-home</span>
+        </div>
+        <div className="tooltip-comparison">
+          <span className={`comparison-value ${isAboveAverage ? 'positive' : 'negative'}`}>
+            {isAboveAverage ? '+' : ''}{diffFromAvg.toFixed(1)}%
+          </span>
+          <span className="comparison-label">vs. EU average</span>
+        </div>
+        <div className="tooltip-salary">
+          <strong>€{countryData.netSalary.toLocaleString()}</strong> after taxes
+        </div>
+        <div className="tooltip-cta">Click to view details</div>
+      </div>
+    );
+  };
+
   // Handle mouse events for tooltip
   const handleMouseEnter = (geo, evt) => {
-    // In europe-geojson, the country name is in properties.NAME
-    const countryName = geo.properties.NAME || geo.properties.name;
-    const countryData = getCountryData(countryName);
-    
-    if (countryData) {
-      const takeHomePercentage = countryData.takeHomePercentage || ((countryData.netSalary / countryData.grossSalary) * 100);
-      setTooltipContent(`
-        <strong>${countryData.name}</strong><br />
-        Take-home: €${countryData.netSalary.toLocaleString()}<br />
-        ${takeHomePercentage.toFixed(1)}% of gross salary
-      `);
-    } else {
-      setTooltipContent(`<strong>${countryName}</strong><br />No data available`);
-    }
-    
+    // Store the geo data to render in the tooltip
+    setTooltipData(geo);
     setTooltipPosition({ x: evt.clientX, y: evt.clientY });
     setShowTooltip(true);
   };
@@ -170,15 +202,16 @@ const EuropeanMap = ({ selectedCountry, comparisonData, onCountrySelect }) => {
           )}
         </ComposableMap>
         
-        {showTooltip && (
+        {showTooltip && tooltipData && (
           <div 
-            className="tooltip" 
+            className="tooltip-container" 
             style={{ 
               left: `${tooltipPosition.x + 10}px`, 
               top: `${tooltipPosition.y + 10}px` 
             }}
-            dangerouslySetInnerHTML={{ __html: tooltipContent }}
-          />
+          >
+            {tooltipContent(tooltipData)}
+          </div>
         )}
       </div>
       
