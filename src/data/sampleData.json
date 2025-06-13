@@ -1,0 +1,218 @@
+[
+  {
+    "name": "Austria",
+    "grossSalary": 50000,
+    "netSalary": 27000,
+    "incomeTax": 12500,
+    "socialSecurity": 9000,
+    "healthInsurance": 1500
+  },
+  {
+    "name": "Belgium",
+    "grossSalary": 50000,
+    "netSalary": 25000,
+    "incomeTax": 15000,
+    "socialSecurity": 6500,
+    "healthInsurance": 3500
+  },
+  {
+    "name": "Bulgaria",
+    "grossSalary": 50000,
+    "netSalary": 34500,
+    "incomeTax": 5000,
+    "socialSecurity": 6500,
+    "healthInsurance": 4000
+  },
+  {
+    "name": "Croatia",
+    "grossSalary": 50000,
+    "netSalary": 30000,
+    "incomeTax": 10000,
+    "socialSecurity": 7500,
+    "healthInsurance": 2500
+  },
+  {
+    "name": "Cyprus",
+    "grossSalary": 50000,
+    "netSalary": 37500,
+    "incomeTax": 7500,
+    "socialSecurity": 4000,
+    "healthInsurance": 1000
+  },
+  {
+    "name": "Czech Republic",
+    "grossSalary": 50000,
+    "netSalary": 35000,
+    "incomeTax": 7500,
+    "socialSecurity": 5500,
+    "healthInsurance": 2000
+  },
+  {
+    "name": "Denmark",
+    "grossSalary": 50000,
+    "netSalary": 28500,
+    "incomeTax": 17500,
+    "socialSecurity": 4000,
+    "healthInsurance": 0
+  },
+  {
+    "name": "Estonia",
+    "grossSalary": 50000,
+    "netSalary": 32500,
+    "incomeTax": 10000,
+    "socialSecurity": 1000,
+    "healthInsurance": 6500
+  },
+  {
+    "name": "Finland",
+    "grossSalary": 50000,
+    "netSalary": 30500,
+    "incomeTax": 15000,
+    "socialSecurity": 4000,
+    "healthInsurance": 500
+  },
+  {
+    "name": "France",
+    "grossSalary": 50000,
+    "netSalary": 27000,
+    "incomeTax": 12500,
+    "socialSecurity": 6500,
+    "healthInsurance": 4000
+  },
+  {
+    "name": "Germany",
+    "grossSalary": 50000,
+    "netSalary": 24000,
+    "incomeTax": 12500,
+    "socialSecurity": 9500,
+    "healthInsurance": 4000
+  },
+  {
+    "name": "Greece",
+    "grossSalary": 50000,
+    "netSalary": 27500,
+    "incomeTax": 11000,
+    "socialSecurity": 8000,
+    "healthInsurance": 3500
+  },
+  {
+    "name": "Hungary",
+    "grossSalary": 50000,
+    "netSalary": 30000,
+    "incomeTax": 7500,
+    "socialSecurity": 9000,
+    "healthInsurance": 3500
+  },
+  {
+    "name": "Ireland",
+    "grossSalary": 50000,
+    "netSalary": 35500,
+    "incomeTax": 12500,
+    "socialSecurity": 2000,
+    "healthInsurance": 0
+  },
+  {
+    "name": "Italy",
+    "grossSalary": 50000,
+    "netSalary": 31500,
+    "incomeTax": 13500,
+    "socialSecurity": 5000,
+    "healthInsurance": 0
+  },
+  {
+    "name": "Latvia",
+    "grossSalary": 50000,
+    "netSalary": 34500,
+    "incomeTax": 10000,
+    "socialSecurity": 5500,
+    "healthInsurance": 0
+  },
+  {
+    "name": "Lithuania",
+    "grossSalary": 50000,
+    "netSalary": 35000,
+    "incomeTax": 7500,
+    "socialSecurity": 4500,
+    "healthInsurance": 3000
+  },
+  {
+    "name": "Luxembourg",
+    "grossSalary": 50000,
+    "netSalary": 30500,
+    "incomeTax": 12500,
+    "socialSecurity": 5500,
+    "healthInsurance": 1500
+  },
+  {
+    "name": "Malta",
+    "grossSalary": 50000,
+    "netSalary": 32500,
+    "incomeTax": 12500,
+    "socialSecurity": 5000,
+    "healthInsurance": 0
+  },
+  {
+    "name": "Netherlands",
+    "grossSalary": 50000,
+    "netSalary": 25000,
+    "incomeTax": 14000,
+    "socialSecurity": 6000,
+    "healthInsurance": 5000
+  },
+  {
+    "name": "Poland",
+    "grossSalary": 50000,
+    "netSalary": 30000,
+    "incomeTax": 8500,
+    "socialSecurity": 7000,
+    "healthInsurance": 4500
+  },
+  {
+    "name": "Portugal",
+    "grossSalary": 50000,
+    "netSalary": 30500,
+    "incomeTax": 14000,
+    "socialSecurity": 5500,
+    "healthInsurance": 0
+  },
+  {
+    "name": "Romania",
+    "grossSalary": 50000,
+    "netSalary": 27500,
+    "incomeTax": 5000,
+    "socialSecurity": 12500,
+    "healthInsurance": 5000
+  },
+  {
+    "name": "Slovakia",
+    "grossSalary": 50000,
+    "netSalary": 33500,
+    "incomeTax": 9500,
+    "socialSecurity": 5000,
+    "healthInsurance": 2000
+  },
+  {
+    "name": "Slovenia",
+    "grossSalary": 50000,
+    "netSalary": 26500,
+    "incomeTax": 12500,
+    "socialSecurity": 11000,
+    "healthInsurance": 0
+  },
+  {
+    "name": "Spain",
+    "grossSalary": 50000,
+    "netSalary": 35000,
+    "incomeTax": 12000,
+    "socialSecurity": 3000,
+    "healthInsurance": 0
+  },
+  {
+    "name": "Sweden",
+    "grossSalary": 50000,
+    "netSalary": 30500,
+    "incomeTax": 16000,
+    "socialSecurity": 3500,
+    "healthInsurance": 0
+  }
+]
