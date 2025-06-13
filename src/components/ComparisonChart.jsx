@@ -3,10 +3,10 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsive
 import './ComparisonChart.css';
 
 const ComparisonChart = ({ selectedCountry, comparisonData }) => {
-  // Sort data by net salary percentage (descending)
+  // Sort data by take-home percentage (descending)
   const sortedData = [...comparisonData].sort((a, b) => {
-    const aPercentage = a.netSalary / a.grossSalary;
-    const bPercentage = b.netSalary / b.grossSalary;
+    const aPercentage = a.takeHomePercentage || (a.netSalary / a.grossSalary * 100);
+    const bPercentage = b.takeHomePercentage || (b.netSalary / b.grossSalary * 100);
     return bPercentage - aPercentage;
   });
 
@@ -16,37 +16,32 @@ const ComparisonChart = ({ selectedCountry, comparisonData }) => {
   // Format data for the chart
   const chartData = topCountries.map(country => {
     const isSelected = country.name === selectedCountry;
+    const takeHomePercentage = country.takeHomePercentage || (country.netSalary / country.grossSalary * 100);
+    
     return {
       name: country.name,
+      'Take-home %': takeHomePercentage,
       'Net Salary': country.netSalary,
-      'Income Tax': country.incomeTax,
-      'Social Security': country.socialSecurity,
-      'Health Insurance': country.healthInsurance,
-      isSelected
+      'Total Deductions': country.grossSalary - country.netSalary,
+      isSelected,
+      grossSalary: country.grossSalary
     };
   });
 
   // Custom tooltip
   const CustomTooltip = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
-      const grossSalary = payload.reduce(
-        (sum, entry) => sum + entry.value,
-        0
-      );
-      
+      const grossSalary = payload[0]?.payload?.grossSalary || 0;
       const netSalary = payload.find(p => p.dataKey === 'Net Salary')?.value || 0;
-      const netPercentage = ((netSalary / grossSalary) * 100).toFixed(1);
+      const takeHomePercentage = payload.find(p => p.dataKey === 'Take-home %')?.value || 0;
       
       return (
         <div className="custom-tooltip">
           <p className="tooltip-label">{`${label}`}</p>
+          <p className="tooltip-percent">{`Take-home: ${takeHomePercentage.toFixed(1)}%`}</p>
           <p className="tooltip-gross">{`Gross: €${grossSalary.toLocaleString()}`}</p>
-          <p className="tooltip-net">{`Net: €${netSalary.toLocaleString()} (${netPercentage}%)`}</p>
-          {payload.map((entry, index) => (
-            <p key={`item-${index}`} style={{ color: entry.color }}>
-              {`${entry.name}: €${entry.value.toLocaleString()}`}
-            </p>
-          ))}
+          <p className="tooltip-net">{`Net: €${netSalary.toLocaleString()}`}</p>
+          <p className="tooltip-deduction">{`Deductions: €${(grossSalary - netSalary).toLocaleString()}`}</p>
         </div>
       );
     }
@@ -55,7 +50,7 @@ const ComparisonChart = ({ selectedCountry, comparisonData }) => {
 
   return (
     <div className="comparison-chart">
-      <h3>Top 10 Countries by Net Salary Percentage</h3>
+      <h3>Top 10 Countries by Take-home Percentage</h3>
       <div className="chart-container">
         <ResponsiveContainer width="100%" height={400}>
           <BarChart
@@ -66,8 +61,7 @@ const ComparisonChart = ({ selectedCountry, comparisonData }) => {
               left: 20,
               bottom: 60
             }}
-            barGap={0}
-            barSize={20}
+            barSize={30}
           >
             <CartesianGrid strokeDasharray="3 3" vertical={false} />
             <XAxis 
@@ -85,10 +79,25 @@ const ComparisonChart = ({ selectedCountry, comparisonData }) => {
             <Tooltip content={<CustomTooltip />} />
             <Legend />
             <Bar 
-              dataKey="Income Tax" 
-              stackId="a" 
+              dataKey="Take-home %" 
+              fill="#22c55e" 
+              className="chart-bar"
+              shape={(props) => {
+                const { x, y, width, height, fill } = props;
+                return <rect 
+                  x={x}
+                  y={y}
+                  width={width}
+                  height={height}
+                  fill={fill}
+                  className={props.payload.isSelected ? 'selected-country-bar' : ''}
+                />;
+              }}
+            />
+            <Bar 
+              dataKey="Total Deductions" 
               fill="#ef4444" 
-              className="chart-bar"
+              className="chart-bar deductions-bar"
               shape={(props) => {
                 const { x, y, width, height, fill } = props;
                 return <rect 
@@ -98,42 +107,10 @@ const ComparisonChart = ({ selectedCountry, comparisonData }) => {
                   height={height}
                   fill={fill}
                   className={props.payload.isSelected ? 'selected-country-bar' : ''}
+                  opacity={0.5}
                 />;
               }}
-            />
-            <Bar 
-              dataKey="Social Security" 
-              stackId="a" 
-              fill="#f97316" 
-              className="chart-bar"
-              shape={(props) => {
-                const { x, y, width, height, fill } = props;
-                return <rect 
-                  x={x}
-                  y={y}
-                  width={width}
-                  height={height}
-                  fill={fill}
-                  className={props.payload.isSelected ? 'selected-country-bar' : ''}
-                />;
-              }}
-            />
-            <Bar 
-              dataKey="Health Insurance" 
-              stackId="a" 
-              fill="#eab308" 
-              className="chart-bar"
-              shape={(props) => {
-                const { x, y, width, height, fill } = props;
-                return <rect 
-                  x={x}
-                  y={y}
-                  width={width}
-                  height={height}
-                  fill={fill}
-                  className={props.payload.isSelected ? 'selected-country-bar' : ''}
-                />;
-              }}
+              hide={true}
             />
             <Bar 
               dataKey="Net Salary" 

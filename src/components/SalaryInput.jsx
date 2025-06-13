@@ -2,11 +2,10 @@ import React from 'react';
 import './SalaryInput.css';
 
 const SalaryInput = ({ grossSalary, setGrossSalary }) => {
-  const handleSalaryChange = (e) => {
-    const value = parseInt(e.target.value, 10);
-    if (!isNaN(value) && value >= 0) {
-      setGrossSalary(value);
-    }
+  const salaryOptions = [2000, 3500, 5000];
+  
+  const handleSalaryChange = (value) => {
+    setGrossSalary(value);
   };
 
   return (
@@ -15,31 +14,19 @@ const SalaryInput = ({ grossSalary, setGrossSalary }) => {
       <div className="salary-value-display">
         €{grossSalary.toLocaleString()}
       </div>
-      <div className="input-container">
-        <span className="currency">€</span>
-        <input
-          type="number"
-          value={grossSalary}
-          onChange={handleSalaryChange}
-          min="0"
-          step="1000"
-          aria-label="Gross salary input"
-        />
+      <div className="salary-options">
+        {salaryOptions.map(salary => (
+          <button 
+            key={salary}
+            className={`salary-option ${grossSalary === salary ? 'selected' : ''}`}
+            onClick={() => handleSalaryChange(salary)}
+          >
+            €{salary.toLocaleString()}
+          </button>
+        ))}
       </div>
-      <div className="salary-slider">
-        <input
-          type="range"
-          min="1000"
-          max="15000"
-          step="100"
-          value={grossSalary}
-          onChange={handleSalaryChange}
-          aria-label="Salary range slider"
-        />
-        <div className="range-labels">
-          <span>€1,000</span>
-          <span>€15,000</span>
-        </div>
+      <div className="salary-description">
+        <p>Select one of the predefined monthly gross salary values to see accurate take-home percentages across Europe.</p>
       </div>
     </div>
   );

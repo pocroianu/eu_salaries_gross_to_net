@@ -5,47 +5,51 @@ import CountrySelector from './components/CountrySelector'
 import SalaryBreakdown from './components/SalaryBreakdown'
 import EuropeanMap from './components/EuropeanMap'
 import ComparisonChart from './components/ComparisonChart'
-import { calculateNetSalary } from './utils/salaryCalculations'
-import sampleData from './data/sampleData.json'
+import grossToNetData from './data/gross.json'
 
 function App() {
-  const [grossSalary, setGrossSalary] = useState(4000)
+  const [grossSalary, setGrossSalary] = useState(2000)
   const [selectedCountry, setSelectedCountry] = useState('Germany')
   const [comparisonData, setComparisonData] = useState([])
   
-  // Calculate net salary for selected country
-  const salaryData = calculateNetSalary(grossSalary, selectedCountry)
+  // Get the selected country's data
+  const getCountryData = (country, salary) => {
+    if (!grossToNetData[country] || !grossToNetData[country][salary]) {
+      return null;
+    }
+    
+    const netSalary = grossToNetData[country][salary];
+    const takeHomePercentage = (netSalary / salary) * 100;
+    
+    return {
+      name: country,
+      grossSalary: salary,
+      netSalary: netSalary,
+      takeHomePercentage: takeHomePercentage,
+      // For compatibility with existing component structures
+      incomeTax: salary - netSalary,
+      socialSecurity: 0,
+      healthInsurance: 0
+    };
+  };
+  
+  // Get data for selected country
+  const salaryData = getCountryData(selectedCountry, grossSalary) || {
+    name: selectedCountry,
+    grossSalary: grossSalary,
+    netSalary: 0,
+    takeHomePercentage: 0,
+    incomeTax: 0,
+    socialSecurity: 0,
+    healthInsurance: 0
+  };
   
   // Update comparison data when country or salary changes
   const updateComparisonData = () => {
-    // Calculate net salary for all countries based on current gross salary
-    const updatedData = sampleData.map(countryData => {
-      // Use the country name from sample data
-      const calculatedData = calculateNetSalary(grossSalary, countryData.name);
-      
-      // If calculation fails, maintain relative proportions from sample data
-      if (!calculatedData) {
-        const ratio = grossSalary / 4000; // 4000 is the base salary in sample data
-        return {
-          ...countryData,
-          grossSalary,
-          netSalary: countryData.netSalary * ratio,
-          incomeTax: countryData.incomeTax * ratio,
-          socialSecurity: countryData.socialSecurity * ratio,
-          healthInsurance: countryData.healthInsurance * ratio
-        };
-      }
-      
-      // Fix the property name (calculatedData uses 'country', but we need 'name' for the map component)
-      return {
-        name: calculatedData.country,
-        grossSalary: calculatedData.grossSalary,
-        netSalary: calculatedData.netSalary,
-        incomeTax: calculatedData.incomeTax, 
-        socialSecurity: calculatedData.socialSecurity,
-        healthInsurance: calculatedData.healthInsurance
-      };
-    });
+    // Get data for all available countries at current salary
+    const updatedData = Object.keys(grossToNetData).map(country => {
+      return getCountryData(country, grossSalary);
+    }).filter(data => data !== null); // Filter out any null values
     
     setComparisonData(updatedData);
   }

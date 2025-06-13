@@ -32,16 +32,14 @@ const EuropeanMap = ({ selectedCountry, comparisonData, onCountrySelect }) => {
       });
   }, []);
 
-  // Create a color scale based on net salary percentage
+  // Create a color scale for take-home percentage
   const colorScale = scaleLinear()
-    .domain([50, 85]) // Assuming net salary ranges from 50% to 85% of gross
-    .range(['#ef4444', '#22c55e'])
-    .clamp(true);
+    .domain([50, 65, 80]) // Adjust this range based on your data
+    .range(["#ef4444", "#eab308", "#22c55e"]) // red -> yellow -> green);
 
   // Country name mapping between GeoJSON and our data
   const countryNameMapping = {
     // Map GeoJSON names to our data names
-    "Czechia": "Czech Republic",
     "United Kingdom": "UK",
     "UK": "United Kingdom",
     "Czechia": "Czech Republic",
@@ -73,11 +71,11 @@ const EuropeanMap = ({ selectedCountry, comparisonData, onCountrySelect }) => {
     const countryData = getCountryData(countryName);
     
     if (countryData) {
-      const netPercentage = ((countryData.netSalary / countryData.grossSalary) * 100).toFixed(1);
+      const takeHomePercentage = countryData.takeHomePercentage || ((countryData.netSalary / countryData.grossSalary) * 100);
       setTooltipContent(`
         <strong>${countryData.name}</strong><br />
-        Net: €${countryData.netSalary.toLocaleString()}<br />
-        ${netPercentage}% of gross salary
+        Take-home: €${countryData.netSalary.toLocaleString()}<br />
+        ${takeHomePercentage.toFixed(1)}% of gross salary
       `);
     } else {
       setTooltipContent(`<strong>${countryName}</strong><br />No data available`);
@@ -91,9 +89,22 @@ const EuropeanMap = ({ selectedCountry, comparisonData, onCountrySelect }) => {
     setShowTooltip(false);
   };
 
+  // Calculate fill color based on take-home percentage
+  const calculateFillColor = (countryData) => {
+    if (!countryData) return "#3d3d3d"; // Default gray for countries with no data
+
+    // Use the takeHomePercentage if available, otherwise calculate it
+    const takeHomePercentage = countryData.takeHomePercentage || 
+      ((countryData.netSalary / countryData.grossSalary) * 100);
+
+    // Use a color scale based on the percentage
+    // Higher percentage = better (more money kept) = greener
+    return colorScale(takeHomePercentage);
+  };
+
   return (
     <div className="european-map">
-      <h3>Net Salary Comparison Across Europe</h3>
+      <h3>Take-home Salary Comparison Across Europe</h3>
       <div className="map-container">
         <ComposableMap
           projection="geoAzimuthalEqualArea"
@@ -116,19 +127,11 @@ const EuropeanMap = ({ selectedCountry, comparisonData, onCountrySelect }) => {
                 // Check if this country is selected
                 const isSelected = countryData && countryData.name === selectedCountry;
                   
-                  // Calculate fill color based on net salary percentage
-                  let fillColor = "#F5F4F6"; // Default color for countries without data
-                  
-                  if (countryData) {
-                    const netPercentage = (countryData.netSalary / countryData.grossSalary) * 100;
-                    fillColor = colorScale(netPercentage);
-                  }
-                
                 return (
                   <Geography
                     key={geo.rsmKey}
                     geography={geo}
-                    fill={fillColor}
+                    fill={calculateFillColor(countryData)}
                     stroke="#FFFFFF"
                     strokeWidth={0.5}
                     style={{
