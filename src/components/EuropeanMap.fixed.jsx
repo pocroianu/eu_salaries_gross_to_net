@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ComposableMap, Geographies, Geography, Marker } from 'react-simple-maps';
+import { ComposableMap, Geographies, Geography, Annotation } from 'react-simple-maps';
 import { scaleLinear } from 'd3-scale';
 import './EuropeanMap.css';
 import CountryModal from './CountryModal';
@@ -74,8 +74,8 @@ const EuropeanMap = ({ selectedCountry, comparisonData, onCountrySelect }) => {
       style: 'currency',
       currency: 'EUR',
       minimumFractionDigits: 0,
-      maximumFractionDigits: 0
-      // Removed compact notation to show full values
+      maximumFractionDigits: 0,
+      notation: 'compact'
     }).format(amount);
   };
 
@@ -149,39 +149,39 @@ const EuropeanMap = ({ selectedCountry, comparisonData, onCountrySelect }) => {
     return colorScale(takeHomePercentage);
   };
   
-  // Map coordinate positions for each country label
-  // These are in [x, y] format for the map projection
-  const countryLabelPositions = {
-    "Germany": [10.4, 51.1],
-    "France": [2.2, 46.2],
-    "Spain": [-3.7, 40.4],
-    "Italy": [12.5, 41.8],
-    "United Kingdom": [-2.5, 54.0],
-    "Netherlands": [4.8, 52.3],
-    "Belgium": [4.3, 50.8],
-    "Sweden": [15.0, 62.0],
-    "Austria": [14.5, 47.5],
-    "Switzerland": [8.2, 46.8],
-    "Denmark": [10.0, 56.0],
-    "Finland": [25.7, 61.9],
-    "Norway": [8.4, 62.0],
-    "Ireland": [-8.2, 53.4],
-    "Portugal": [-8.2, 39.3],
-    "Greece": [21.8, 39.0],
-    "Poland": [19.1, 51.9],
-    "Czech Republic": [15.4, 49.8],
-    "Romania": [24.9, 45.9],
-    "Hungary": [19.5, 47.1],
-    "Bulgaria": [25.4, 42.7],
-    "Slovakia": [19.6, 48.6],
-    "Slovenia": [14.9, 46.1],
-    "Croatia": [15.2, 45.1],
-    "Estonia": [25.0, 58.5],
-    "Latvia": [24.6, 56.8],
-    "Lithuania": [23.8, 55.1],
-    "Cyprus": [33.4, 35.1],
-    "Luxembourg": [6.1, 49.8],
-    "Malta": [14.3, 35.9]
+  // Country centroid positions for placing net salary labels
+  // These are approximate positions that might need adjustment
+  const countryCentroids = {
+    "Germany": { x: 10, y: -5 },
+    "France": { x: -1, y: -3 },
+    "Spain": { x: -9, y: 7 },
+    "Italy": { x: 10, y: 5 },
+    "United Kingdom": { x: -7, y: -12 },
+    "Netherlands": { x: 2, y: -10 },
+    "Belgium": { x: 0, y: -8 },
+    "Sweden": { x: 10, y: -20 },
+    "Austria": { x: 12, y: -1 },
+    "Switzerland": { x: 5, y: 0 },
+    "Denmark": { x: 5, y: -16 },
+    "Finland": { x: 20, y: -20 },
+    "Norway": { x: 5, y: -24 },
+    "Ireland": { x: -13, y: -15 },
+    "Portugal": { x: -15, y: 8 },
+    "Greece": { x: 20, y: 13 },
+    "Poland": { x: 19, y: -8 },
+    "Czech Republic": { x: 13, y: -5 },
+    "Romania": { x: 23, y: 2 },
+    "Hungary": { x: 18, y: 0 },
+    "Bulgaria": { x: 23, y: 7 },
+    "Slovakia": { x: 17, y: -3 },
+    "Slovenia": { x: 12, y: 0 },
+    "Croatia": { x: 13, y: 3 },
+    "Estonia": { x: 21, y: -18 },
+    "Latvia": { x: 21, y: -15 },
+    "Lithuania": { x: 21, y: -13 },
+    "Cyprus": { x: 33, y: 17 },
+    "Luxembourg": { x: 2, y: -6 },
+    "Malta": { x: 10, y: 15 }
   };
 
   return (
@@ -210,44 +210,42 @@ const EuropeanMap = ({ selectedCountry, comparisonData, onCountrySelect }) => {
                   const isSelected = countryData && countryData.name === selectedCountry;
                     
                   return (
-                    <g key={geo.rsmKey}>
-                      <Geography
-                        geography={geo}
-                        fill={calculateFillColor(countryData)}
-                        stroke="#FFFFFF"
-                        strokeWidth={0.5}
-                        style={{
-                          default: {
-                            outline: "none",
-                            stroke: "#FFFFFF",
-                            strokeWidth: 0.5,
-                            opacity: 0.9
-                          },
-                          hover: {
-                            outline: "none",
-                            stroke: "#FFFFFF",
-                            strokeWidth: 1.5,
-                            opacity: 1
-                          },
-                          pressed: {
-                            outline: "none",
-                            stroke: "#FFFFFF",
-                            strokeWidth: 1,
-                            opacity: 0.8
-                          }
-                        }}
-                        className={isSelected ? "selected-country" : ""}
-                        onMouseEnter={(evt) => handleMouseEnter(geo, evt)}
-                        onMouseLeave={handleMouseLeave}
-                        onClick={() => {
-                          if (countryData) {
-                            onCountrySelect(countryName);
-                            setModalCountryData(countryData);
-                          }
-                        }}
-                      />
-                      {/* We don't render labels directly here */}
-                    </g>
+                    <Geography
+                      key={geo.rsmKey}
+                      geography={geo}
+                      fill={calculateFillColor(countryData)}
+                      stroke="#FFFFFF"
+                      strokeWidth={0.5}
+                      style={{
+                        default: {
+                          outline: "none",
+                          stroke: "#FFFFFF",
+                          strokeWidth: 0.5,
+                          opacity: 0.9
+                        },
+                        hover: {
+                          outline: "none",
+                          stroke: "#FFFFFF",
+                          strokeWidth: 1.5,
+                          opacity: 1
+                        },
+                        pressed: {
+                          outline: "none",
+                          stroke: "#FFFFFF",
+                          strokeWidth: 1,
+                          opacity: 0.8
+                        }
+                      }}
+                      className={isSelected ? "selected-country" : ""}
+                      onMouseEnter={(evt) => handleMouseEnter(geo, evt)}
+                      onMouseLeave={handleMouseLeave}
+                      onClick={() => {
+                        if (countryData) {
+                          onCountrySelect(countryName);
+                          setModalCountryData(countryData);
+                        }
+                      }}
+                    />
                   );
                 })
               }
@@ -255,42 +253,31 @@ const EuropeanMap = ({ selectedCountry, comparisonData, onCountrySelect }) => {
           )}
           
           {/* Add net salary labels to countries with data */}
-          {comparisonData && comparisonData.map(country => {
-            // Skip if we don't have both a position and net salary data
-            if (!country || !countryLabelPositions[country.name] || !country.netSalary) return null;
-            
-            const isSelected = country.name === selectedCountry;
+          {geoData && comparisonData && comparisonData.map(country => {
+            if (!country || !countryCentroids[country.name]) return null;
+            const position = countryCentroids[country.name];
             
             return (
-              <Marker
+              <Annotation
                 key={`label-${country.name}`}
-                coordinates={countryLabelPositions[country.name]}
+                subject={[position.x, position.y]}
+                dx={0}
+                dy={0}
               >
-                <g>
-                  <rect 
-                    x={-35} 
-                    y={-10} 
-                    width={70} 
-                    height={20} 
-                    rx={4} 
-                    fill="rgba(0,0,0,0.7)" 
-                    stroke={isSelected ? "#646cff" : "rgba(255,255,255,0.3)"}
-                    strokeWidth={isSelected ? 1.5 : 0.5}
-                  />
-                  <text 
-                    className="country-net-label"
-                    textAnchor="middle"
-                    y={2}
-                    style={{
-                      fontWeight: isSelected ? "bold" : "normal",
-                      fontSize: "10px",
-                      fill: "white"
-                    }}
-                  >
-                    {formatNetSalary(country.netSalary)}
-                  </text>
-                </g>
-              </Marker>
+                <text 
+                  className="country-net-label"
+                  textAnchor="middle" 
+                  alignmentBaseline="middle"
+                  style={{ 
+                    fill: country.name === selectedCountry ? "#ffffff" : "#d1d5db",
+                    fontWeight: country.name === selectedCountry ? "bold" : "normal",
+                    fontSize: "0.65rem",
+                    textShadow: "0 1px 3px rgba(0,0,0,0.7)"
+                  }}
+                >
+                  {formatNetSalary(country.netSalary)}
+                </text>
+              </Annotation>
             );
           })}
         </ComposableMap>

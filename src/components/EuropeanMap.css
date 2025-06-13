@@ -147,6 +147,16 @@
   filter: drop-shadow(0 0 8px rgba(100, 108, 255, 0.8));
 }
 
+/* Styles for country net salary labels */
+.country-net-label {
+  font-size: 0.8rem !important;
+  font-weight: 700 !important;
+  fill: #ffffff !important;
+  letter-spacing: -0.5px;
+  pointer-events: none;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
 .color-scale {
   display: flex;
   align-items: center;
