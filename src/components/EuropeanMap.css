@@ -39,10 +39,17 @@
   border-radius: 8px;
   overflow: hidden;
   transition: all 0.3s ease;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .map-container svg {
   overflow: visible !important;
+  width: 100% !important;
+  height: auto !important;
+  max-height: 450px;
 }
 
 .tooltip {
@@ -81,7 +88,8 @@
 
 .scale-gradient {
   height: 10px;
-  width: 200px;
+  width: 100%;
+  max-width: 200px;
   background: linear-gradient(to right, #ef4444, #fcd34d, #22c55e);
   border-radius: 5px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
@@ -91,4 +99,45 @@
   font-size: 0.85rem;
   color: #aaa;
   font-weight: 500;
+}
+
+/* Responsive styles for European map */
+@media (max-width: 1024px) {
+  .map-container {
+    height: 400px;
+  }
+}
+
+@media (max-width: 768px) {
+  .map-container {
+    height: 350px;
+  }
+  
+  .european-map h3 {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .map-container {
+    height: 300px;
+  }
+  
+  .european-map {
+    padding: 1rem;
+  }
+  
+  .european-map h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .color-scale {
+    padding: 8px;
+    margin-top: 1rem;
+  }
+  
+  .scale-label {
+    font-size: 0.75rem;
+  }
 }
