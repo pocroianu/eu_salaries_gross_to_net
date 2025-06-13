@@ -20,7 +20,6 @@ const SalaryInput = ({ grossSalary, setGrossSalary }) => {
             onClick={() => handleSalarySelect(salary)}
           >
             <span className="salary-amount">€{salary.toLocaleString()}</span>
-            <span className="salary-label">{salary === 2000 ? 'Lower Income' : salary === 3500 ? 'Middle Income' : 'Higher Income'}</span>
           </button>
         ))}
       </div>

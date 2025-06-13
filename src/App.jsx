@@ -3,7 +3,6 @@ import './App.css'
 import SalaryInput from './components/SalaryInput'
 import SalaryBreakdown from './components/SalaryBreakdown'
 import EuropeanMap from './components/EuropeanMap'
-import ComparisonChart from './components/ComparisonChart'
 import grossToNetData from './data/gross.json'
 
 function App() {
@@ -69,20 +68,17 @@ function App() {
       </div>
       
       <div className="visualization-container">
-        <div className="left-panel">
-          <SalaryBreakdown salaryData={salaryData} />
-        </div>
         
-        <div className="right-panel">
+        
+        <div>
           <EuropeanMap 
             selectedCountry={selectedCountry} 
             comparisonData={comparisonData}
             onCountrySelect={setSelectedCountry}
           />
-          <ComparisonChart 
-            selectedCountry={selectedCountry}
-            comparisonData={comparisonData}
-          />
+        </div>
+        <div>
+          <SalaryBreakdown salaryData={salaryData} />
         </div>
       </div>
       
