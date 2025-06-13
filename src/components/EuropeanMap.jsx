@@ -3,13 +3,34 @@ import { ComposableMap, Geographies, Geography } from 'react-simple-maps';
 import { scaleLinear } from 'd3-scale';
 import './EuropeanMap.css';
 
-// European map GeoJSON - using a reliable Europe-specific source
-const geoUrl = "https://cdn.jsdelivr.net/npm/europe-geojson@1.0.0/europe.json";
+// Move the TopoJSON file to the public directory for simpler access
+// The file should be at: public/data/europe.topojson
+const geoUrl = "/data/europe.topojson";
 
 const EuropeanMap = ({ selectedCountry, comparisonData, onCountrySelect }) => {
   const [tooltipContent, setTooltipContent] = useState('');
   const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
   const [showTooltip, setShowTooltip] = useState(false);
+  const [geoData, setGeoData] = useState(null);
+  
+  // Load the TopoJSON file when component mounts
+  useEffect(() => {
+    // Using absolute URL to make sure it works in development and production
+    fetch(geoUrl)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`Failed to load map data: ${response.status} ${response.statusText}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log("Map data loaded successfully", data);
+        setGeoData(data);
+      })
+      .catch(error => {
+        console.error("Error loading map data:", error);
+      });
+  }, []);
 
   // Create a color scale based on net salary percentage
   const colorScale = scaleLinear()
@@ -73,7 +94,8 @@ const EuropeanMap = ({ selectedCountry, comparisonData, onCountrySelect }) => {
             scale: 1200
           }}
         >
-          <Geographies geography={geoUrl}>
+          {geoData && (
+            <Geographies geography={geoData}>
             {({ geographies }) =>
               geographies.map((geo) => {
                 // Get country name from properties (europe-geojson uses NAME)
@@ -134,6 +156,7 @@ const EuropeanMap = ({ selectedCountry, comparisonData, onCountrySelect }) => {
               })
             }
           </Geographies>
+          )}
         </ComposableMap>
         
         {showTooltip && (
