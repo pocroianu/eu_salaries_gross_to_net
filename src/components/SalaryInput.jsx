@@ -24,9 +24,6 @@ const SalaryInput = ({ grossSalary, setGrossSalary }) => {
           </button>
         ))}
       </div>
-      <div className="salary-description">
-        <p>Select one of the predefined monthly gross salary values to see accurate take-home percentages across Europe.</p>
-      </div>
     </div>
   );
 };

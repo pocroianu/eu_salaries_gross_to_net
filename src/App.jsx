@@ -62,11 +62,6 @@ function App() {
     <div className="container">
       <header>
         <h1>EU Salaries: Take-Home Visualization</h1>
-        <p className="subtitle">See how much of your salary you actually keep after taxes across Europe</p>
-        <div className="instructions">
-          <p><span className="instruction-step">1.</span> Select a monthly salary below</p>
-          <p><span className="instruction-step">2.</span> Click any country on the map to explore details</p>
-        </div>
       </header>
       
       <div className="controls">

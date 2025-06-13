@@ -8,6 +8,8 @@
   padding: 1.5rem;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
   overflow: hidden;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .comparison-chart h3 {
@@ -42,6 +44,7 @@
   background: rgba(0, 0, 0, 0.2);
   padding: 1rem;
   border: 1px solid rgba(255, 255, 255, 0.05);
+  box-sizing: border-box;
 }
 
 .custom-tooltip {
@@ -116,4 +119,88 @@
   filter: drop-shadow(0 0 8px rgba(100, 108, 255, 0.8));
   stroke: #646cff;
   stroke-width: 2px;
+}
+
+/* Responsive styles for the comparison chart */
+@media (max-width: 1024px) {
+  .chart-container {
+    height: 370px;
+  }
+}
+
+@media (max-width: 768px) {
+  .comparison-chart {
+    padding: 1.25rem;
+  }
+
+  .comparison-chart h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .chart-container {
+    height: 350px;
+    padding: 0.75rem;
+  }
+
+  .recharts-xAxis .recharts-cartesian-axis-tick-value,
+  .recharts-yAxis .recharts-cartesian-axis-tick-value {
+    font-size: 0.75rem;
+  }
+
+  .custom-tooltip {
+    max-width: 220px;
+    padding: 10px 14px;
+  }
+
+  .tooltip-label {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .comparison-chart {
+    padding: 1rem;
+  }
+
+  .comparison-chart h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .chart-container {
+    height: 300px;
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+  }
+
+  .recharts-legend-item-text {
+    font-size: 0.8rem;
+  }
+
+  .recharts-xAxis .recharts-cartesian-axis-tick-value,
+  .recharts-yAxis .recharts-cartesian-axis-tick-value {
+    font-size: 0.7rem;
+  }
+
+  .custom-tooltip {
+    max-width: 180px;
+    padding: 8px 10px;
+    font-size: 0.8rem;
+  }
+
+  .tooltip-label {
+    font-size: 0.9rem;
+    padding-bottom: 6px;
+    margin-bottom: 6px;
+  }
+
+  .tooltip-gross, .tooltip-deduction {
+    font-size: 0.8rem;
+  }
+
+  .tooltip-net {
+    font-size: 0.85rem;
+    padding: 3px 6px;
+  }
 }

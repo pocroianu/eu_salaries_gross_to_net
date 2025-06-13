@@ -50,24 +50,7 @@ const SalaryBreakdown = ({ salaryData }) => {
           </div>
         </div>
       </div>
-      
-      <div className="breakdown-item deductions">
-        <div className="label">Total Deductions</div>
-        <div className="value">{formatCurrency(totalDeductions)}</div>
-        <div className="percentage">{deductionsPercentage.toFixed(1)}%</div>
-        <div className="bar-container">
-          <div className="bar total-deductions" style={{ width: `${deductionsPercentage}%` }}></div>
-        </div>
-      </div>
-      
-      <div className="breakdown-item net">
-        <div className="label">Net Monthly Salary</div>
-        <div className="value">{formatCurrency(netSalary)}</div>
-        <div className="percentage">{(takeHomePercentage || ((netSalary / grossSalary) * 100)).toFixed(1)}%</div>
-        <div className="bar-container">
-          <div className="bar net-salary" style={{ width: `${takeHomePercentage || ((netSalary / grossSalary) * 100)}%` }}></div>
-        </div>
-      </div>
+    
     </div>
   );
 };

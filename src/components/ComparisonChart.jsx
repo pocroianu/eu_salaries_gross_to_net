@@ -1,8 +1,26 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import './ComparisonChart.css';
 
 const ComparisonChart = ({ selectedCountry, comparisonData }) => {
+  // Responsive settings depending on screen size
+  const [isMobile, setIsMobile] = useState(false);
+  
+  // Check if device is mobile on mount and when window resizes
+  useEffect(() => {
+    const checkIsMobile = () => {
+      setIsMobile(window.innerWidth <= 480);
+    };
+    
+    // Initial check
+    checkIsMobile();
+    
+    // Add listener for window resize
+    window.addEventListener('resize', checkIsMobile);
+    
+    // Cleanup
+    return () => window.removeEventListener('resize', checkIsMobile);
+  }, []);
   // Sort data by take-home percentage (descending)
   const sortedData = [...comparisonData].sort((a, b) => {
     const aPercentage = a.takeHomePercentage || (a.netSalary / a.grossSalary * 100);
@@ -10,8 +28,8 @@ const ComparisonChart = ({ selectedCountry, comparisonData }) => {
     return bPercentage - aPercentage;
   });
 
-  // Take top 10 countries for comparison
-  const topCountries = sortedData.slice(0, 10);
+  // Take top countries for comparison - fewer on mobile
+  const topCountries = sortedData.slice(0, isMobile ? 6 : 10);
 
   // Format data for the chart
   const chartData = topCountries.map(country => {
@@ -66,15 +84,17 @@ const ComparisonChart = ({ selectedCountry, comparisonData }) => {
             <CartesianGrid strokeDasharray="3 3" vertical={false} />
             <XAxis 
               dataKey="name" 
-              angle={-45} 
+              angle={isMobile ? -60 : -45} 
               textAnchor="end"
-              height={60}
-              tick={{ fontSize: 12 }}
-              tickMargin={10}
+              height={isMobile ? 80 : 60}
+              tick={{ fontSize: isMobile ? 10 : 12 }}
+              tickMargin={isMobile ? 8 : 10}
             />
             <YAxis 
               tickFormatter={(value) => `€${value / 1000}k`}
               domain={[0, 'dataMax']}
+              tick={{ fontSize: isMobile ? 10 : 12 }}
+              width={isMobile ? 35 : 45}
             />
             <Tooltip content={<CustomTooltip />} />
             <Legend />
