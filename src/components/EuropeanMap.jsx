@@ -6,7 +6,8 @@ import CountryModal from './CountryModal';
 
 // Move the TopoJSON file to the public directory for simpler access
 // The file should be at: public/data/europe.topojson
-const geoUrl = "/data/europe.topojson";
+// Use import.meta.env.BASE_URL to get the correct base path in production and development
+const geoUrl = `${import.meta.env.BASE_URL}data/europe.topojson`;
 
 const EuropeanMap = ({ selectedCountry, comparisonData, onCountrySelect }) => {
   const [tooltipData, setTooltipData] = useState(null);
