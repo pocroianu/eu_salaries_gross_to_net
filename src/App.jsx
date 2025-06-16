@@ -68,18 +68,17 @@ function App() {
       </div>
       
       <div className="visualization-container">
+        <div className="left-panel">
+          <SalaryBreakdown salaryData={salaryData} />
+        </div>
         
-        
-        <div>
+        <div className="right-panel">
           <EuropeanMap 
             selectedCountry={selectedCountry} 
             comparisonData={comparisonData}
             onCountrySelect={setSelectedCountry}
           />
         </div>
-        {/* <div>
-          <SalaryBreakdown salaryData={salaryData} />
-        </div> */}
       </div>
       
       <footer>
